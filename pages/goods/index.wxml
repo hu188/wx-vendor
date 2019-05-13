@@ -1,0 +1,94 @@
+<wxs module="utils" src="./index.wxs" />
+<wxs module="price" src="../../utils/common.wxs" />
+<view class="container container1">
+
+  <view wx:if="{{sign}}" class="subclass">
+    <scroll-view scroll-y="false" class="sub-left">
+      <view class="ul-left">
+        <view wx:if="{{s===''}}" class="active">商品</view>
+        <view wx:else>
+          <view wx:for="{{goodsType}}" wx:for-index="idx" wx:key='idx'>
+            <view>
+              <view class="{{selectType === item ? 'active' : ''}}" data-id="{{item}}" catchtap="typeHand">{{item}}</view>
+            </view>
+          </view>
+        </view>
+
+      </view>
+    </scroll-view>
+
+    <scroll-view scroll-y="false" class="sub-right">
+      <view wx:if="{{list.length>0}}" class="sub-lists">
+        <view wx:for="{{list}}" wx:key='index' style='display:flex;flex-direction:column; border-bottom: 2rpx solid rgba(125, 125, 125, .2);margin-bottom: 10rpx;'>
+          <view class="colsview">
+            <image wx:if="{{item.picture}}" src="{{utils.convertImagePath(item.picture)}}" data-id="{{item.id}}"></image>
+            <image wx:else src="../images/none.png"></image>
+            <view data-id="{{item.id}}" class="goods">
+              <view class="hdsp">
+                <text class="{{item.s?'hdcss':''}}">{{item.s?'货道:'+item.s:''}}</text>
+                <text >{{item.commodityName}}</text>
+              </view>
+              <view wx:if="{{isVip == 1 && isFirstBuy==1}}">
+                <view class="coltex vipPrice">会员价：￥{{price.price(item.costPrice)}}</view>
+                <view class="coltex price">
+                  <text style='text-decoration:line-through;color:#000;margin-left:0px;'>原价：￥{{price.price(item.retailPrice)}}</text>
+                </view>
+              </view>
+              <view wx:else>
+                <view class="coltex price">购买价：￥{{price.price(item.retailPrice)}} </view>
+                <view class="coltex vipPrice">
+                  <text style='text-decoration:color:#000;margin-left:0px;'>会员价：￥{{price.price(item.costPrice)}}  </text>
+                </view>
+              </view>
+
+              <!-- <text class="discount" wx:if='{{item.discount && item.discount>0}}'>已优惠:{{price.price(item.discount)}}</text> -->
+            </view>
+            <view class="counter">
+              <view wx:if="{{item.status}}">
+                <input-number wx:if="{{item.status==1}}" value="{{item.count ||0}}" min="0" max="1" step="1" bindchange="{{count<1 || item.count==1?'changeNumber':'noChangeNumber'}}" data-index='{{index}}' data-item='{{utils.getCoupon(item.good)}}' />
+                <input-number wx:else value="{{item.count ||0}}" min="0" max="0" step="1" bindchange="noGoods" data-index='{{index}}' data-item='{{utils.getCoupon(item.good)}}' />
+              </view>
+              <view wx:elif="{{item.valid && item.valid==1}}">
+                <!--有效值为1时不可购买-->
+                <input-number value="{{item.count ||0}}" min="0" max="0" step="1" bindchange="fault" data-index='{{index}}' data-item='{{utils.getCoupon(item.good)}}' />
+              </view>
+              <view wx:else>
+                <view wx:if="{{item.num>0 && tp==1 && isVip == 1 && isFirstBuy==1 }}">
+                  <input-number value="{{item.count ||0}}" min="0" max="1" step="1" bindchange="{{count<1 || item.count==1?'changeNumber':'noChangeNumber'}}" data-index='{{index}}' data-item='{{utils.getCoupon(item.good)}}' />
+                </view>
+                <view wx:elif="{{item.num>0 && tp==1}}">
+                  <input-number value="{{item.count ||0}}" min="0" max="{{item.num}}" step="1" bindchange="changeNumber" data-index='{{index}}' data-item='{{utils.getCoupon(item.good)}}' />
+                </view>
+                <view wx:elif="{{item.num>0 }}">
+                  <input-number value="{{item.count ||0}}" min="0" max="1" step="1" bindchange="{{count<1 || item.count==1?'changeNumber':'noChangeNumber'}}" data-index='{{index}}' data-item='{{utils.getCoupon(item.good)}}' />
+                </view>
+                <view wx:else>
+                  <input-number value="{{item.count ||0}}" min="0" max="0" step="1" bindchange="noGoods" data-index='{{index}}' data-item='{{utils.getCoupon(item.good)}}' />
+                </view>
+              </view>
+
+            </view>
+          </view>
+          <text class="discount">{{utils.getCoupon(item.good).couponName}}</text>
+        </view>
+      </view>
+      <view wx:else class="sub-lists">
+        <text class="empty">暂无商品</text>
+      </view>
+    </scroll-view>
+  </view>
+  <view wx:else>
+    <image src='../images/scancode.jpg' class='p' bindtap="click"></image>
+    <text class='txt'>扫码进入小程序</text>
+  </view>
+  <view class="mask" catchtouchmove="preventTouchMove" wx:if="{{hidden}}"></view>
+  <view class="modalDlg" wx:if="{{hidden}}">
+    <text class="modalText">需授权后，进入小程序！</text>
+    <button class="modalButton" size='default' open-type="getUserInfo" bindgetuserinfo="getUserInfo">确定 </button>
+  </view>
+
+</view>
+<cart count='{{count}}' total='{{total}}' discount="{{discount}}" bindonSubmit='submitHandler'></cart>
+<!-- <button open-type='getUserInfo' bindgetuserinfo='getUserInfoFun' class='auth' wx:if='{{!auth}}'></button>  -->
+<i-tab></i-tab>
+<i-toast id="toast" />

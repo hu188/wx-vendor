@@ -1,0 +1,38 @@
+<view class="coupon">
+  <view wx:if="{{couponList.length<=0}}" class="no-branchw">商家还没有发布优惠券哦~~
+  </view>
+  <view class="coupon_body_eveycoupon" wx:for="{{couponList}}" wx:for-index="idx" wx:for-item="itemName" wx:index='{{index}}' wx:key='{{clist}}'>
+    <view class="coupon_li">
+      <view class="coupon_moneyandinfo" data-couponname="{{itemName.couponName}}" data-starttime="{{itemName.startTime}}" data-endtime="{{itemName.endTime}}" data-price="{{itemName.minimum}}" data-useofrange="{{goodsinfo[itemName.GUID].NAME}}" data-detailedurl="{{goodsinfo[itemName.GUID].GOODSGUID}}">
+        <view class="coupon_price">
+          <text>券</text>
+        </view>
+        <view class="coupon_info">
+          <view class="coupon_name">{{itemName.couponName}}</view>
+          <view class="valid_date">有效期{{itemName.startTime}} 至 {{itemName.endTime}}</view>
+          <view class="limit_info">订单满 {{itemName.minimum}} 元可用</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!--点击显示的详细信息  -->
+<view class="coupon_detailed_info" animation="{{animationData}}">
+  <view class="info_area">
+    <view class="info_and_done">
+      <view class="info">优惠券详情</view>
+      <view class="done" onTap="closecouponinfo">关闭</view>
+    </view>
+    <view class="coupon_name">{{couponname}}</view>
+    <view class="valid_date">
+      <text>有效期</text>
+      <text>{{starttime}}</text>
+      <text>至</text>
+      <text>{{endtime}}</text>
+    </view>
+    <view class="limit_info">
+      <text>订单满 </text>
+          <text>{{price}}</text>
+        </view>
+      </view>
+    </view>

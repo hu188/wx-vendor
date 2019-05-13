@@ -1,0 +1,83 @@
+<wxs module="price" src="../../utils/common.wxs"/>
+<view class="container">
+    <view class="addrdiv">
+        <view class="line">
+            <image src="../images/line.png"></image>
+            <image src="../images/line.png"></image>
+            <image src="../images/line.png"></image>
+            <image src="../images/line.png"></image>
+            <image src="../images/line.png"></image>
+            <image src="../images/line.png"></image>
+        </view>
+        <view class="address">
+            <view class="address-detail">
+                <view>
+                    <text>设备名称：{{deviceName}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="line">
+            <image src="../images/line.png"></image>
+            <image src="../images/line.png"></image>
+            <image src="../images/line.png"></image>
+            <image src="../images/line.png"></image>
+            <image src="../images/line.png"></image>
+            <image src="../images/line.png"></image>
+        </view>
+    </view>
+    <view class="produts-list" wx:for="{{goodsList}}" wx:for-index="idx" wx:for-item="item" wx:key='{{index}}'>
+        <view class="pro-details">
+            <view>{{item.commodityName}}</view>
+            <view>已优惠:{{item.discount}}</view>
+            <view>
+                <text wx:if="{{isVip==1 && isFirstBuy==1}}">￥{{price.price(item.costPrice)}}</text>
+                <text wx:else>￥{{price.price(item.retailPrice)}}</text>
+                <text class="goodsNum">x{{item.count}}</text>
+            </view>
+        </view>
+    </view>
+    <!-- <view class="pro-pay">
+         <picker bindchange="bindPaymentChange" value="{{paymentindex}}" range="{{paymentarray}}">
+            <view class="picker">
+                <view>支付方式</view>
+                <view>{{paymentarray[paymentindex]}}</view>
+            </view> 
+        </picker> 
+    </view> -->
+     <view class="pro-pay">
+        <view class="picker">
+            <view>支付方式</view>
+            <view>
+              <radio-group bindchange="bindPaymentChange" >
+                 <radio value="{{0}}" checked="{{item.checked}}" checked='{{true}}'/>微信支付
+                 <radio value="{{1}}" checked="{{item.checked}}"/>余额支付
+              </radio-group>
+            </view>
+        </view> 
+    </view> 
+
+    <view class="pro-pay" wx:if='{{couponList.length > 0}}'>
+        <picker bindchange="bindCouponChange" value="{{couponIndex}}" range="{{couponList}}" range-key='couponName'>
+            <view class="picker">
+                <view>优惠券</view>
+                <view>{{couponList[couponIndex].couponName}}</view>
+            </view>
+        </picker>
+    </view>
+    <view class="price-list">
+        <view class="orderamount">商品金额：￥{{price.price(totalPrice)}}</view>
+    </view>
+    <view class="submit-btn">
+        <view wx:if='{{paymentindex == 0}}'>微信支付:                        
+            <label class="orderamount">￥{{price.price(realPrice)}}</label>
+        </view>
+           <view wx:elif='{{paymentindex == 1}}'>余额支付:  
+            <label class="orderamount">￥{{price.price(realPrice)}}</label>                 
+            <!-- <label class="orderamount" wx:if='{{coupon.id>0}}'>￥{{balance >= totalPrice ? price.price(totalPrice-coupon.discount) : price.price( balance)}}</label>
+            <label class="orderamount" wx:else>￥{{balance >= totalPrice ? price.price(totalPrice) : price.price( balance)}}</label> -->
+        </view>
+        <view class="allbackground" catchtap="submitOrderTap">提交订单</view>
+    </view>
+</view>
+<i-toast id="toast" />
+<i-message id="message" />

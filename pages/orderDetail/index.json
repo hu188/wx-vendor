@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "订单详情",
+  "usingComponents": {
+    "i-toast": "../../components/toast/index",
+    "i-message": "../../components/message/index"
+  }
+}

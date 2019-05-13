@@ -1,0 +1,46 @@
+<wxs module="price" src="../../utils/common.wxs" />
+<view class="container">
+  <view class="classtab tb1">
+
+    <view catchtap='choseorder' data-value="4" class="{{selectIndex*1 === 4 ? 'border' : ''}} tb1">已付款</view>
+    <view catchtap='choseorder' data-value="3" class="{{selectIndex*1 === 3? 'border' : ''}} tb1">待付款</view>
+    <view catchtap='choseorder' data-value="2" class="{{selectIndex*1 ===  2? 'border' : ''}} tb1">已退款</view>
+    <view catchtap='choseorder' data-value="6" class="{{selectIndex*1 === 6 ? 'border' : ''}} tb1">出货失败</view>
+  </view>
+  <scroll-view scroll-y>
+    <view class="list">
+      <view class="item" wx:for="{{orderlist}}" wx:key='order'>
+        <view class="od_div">
+          <!-- <view wx:if="{{item.extendMsg}}"> -->
+          <navigator url="../orderDetail/index?orderNo={{item.extendMsg?item.extendMsg:item.orderNo}}&totalMoney={{item.money}}">
+            <view class="od_top">
+              <text>订单编号：{{item.extendMsg?item.extendMsg:item.orderNo}}</text>
+              <text>下单时间：{{item.strCreateTime}}</text>
+              <text>订单总价：￥{{price.price(item.money)}}</text>
+              <text>实付金额：￥{{price.price(item.money)}}</text>
+            </view>
+          </navigator>
+          <view class="od_bottom">
+            <view class="od_bottom1">
+              <view class="od_status">
+
+                <view class="orderright bluefont">
+                  <view wx:if="{{item.operateType === 3 }}" class="blueBtn" catchtap='view' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-index='{{index}}' data-money='{{item.money}}'>去支付</view>
+                  <view wx:elif="{{item.operateType === 2}}" class="blueBtn" catchtap='view' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}'>查看</view>
+                  <view wx:else>
+                    <view class="blueBtn" catchtap='refund' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-money='{{item.money}}'>退款</view>
+                    <view wx:if="{{item.operateType === 6}}" class="blueBtn" catchtap='send' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-money='{{item.money}}'>重新出货</view>
+                    <view wx:else class="blueBtn" catchtap='view' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-money='{{item.money}}'>查看</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<i-toast id="toast" />
+<i-tab current='order'></i-tab>

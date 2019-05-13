@@ -1,0 +1,25 @@
+<!--index.wxml-->
+<import src="../../wxParse/wxParse.wxml"/>
+<view class="container">
+  <view  bindtap="pageTop" class="pagetop">  
+    <view  bindtap="bindViewTap" class="userinfo">
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{phonenum}}</text>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>
+    <view class="rightbtn">
+      <view class="quit" bindtap="{{bindevent}}">{{unbindtxt}}</view>
+    </view>
+  </view>
+  <view class="pagenav">
+    <navigator url="../health/health"><div>体检记录</div></navigator>
+    <navigator url="../health/report"><div>健康报告</div></navigator>
+    <navigator url="../health/suggest"><div>健康建议</div></navigator>
+    <navigator url="../health/userinfo"><div>个人信息</div></navigator>
+    <!--<div>咨询服务</div>-->
+  </view>
+  <view class="pagecontent">
+    	<template is="wxParse" data="{{wxParseData:record.nodes}}"/>
+			<!--自测数据 结束-->
+  </view>
+</view>

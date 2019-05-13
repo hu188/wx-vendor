@@ -1,0 +1,15 @@
+<view class="disl">
+  <view bindtap="xuanz" class="pldh {{xz==index?'actss':''}}" data-id="{{index}}" wx:for="{{czlist}}" wx:key='{{list}}'>
+  
+    <view class="renmb">
+      {{item.rechargeName}}
+    </view>
+
+  </view>
+</view>
+<view class="smwz">
+  <view bindtap="czsave" class="smgw">
+    确认支付
+  </view>
+</view>
+<i-toast id="toast" />

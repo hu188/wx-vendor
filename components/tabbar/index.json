@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "i-tab-bar": "../tab-bar/index",
+    "i-tab-bar-item": "../tab-bar-item/index"
+  }
+}

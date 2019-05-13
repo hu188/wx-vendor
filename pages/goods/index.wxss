@@ -1,0 +1,317 @@
+.container1{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #fff;
+}
+.p{
+  width: 200px;
+  height: 200px; 
+  padding-top: 100px;
+}
+.txt{
+  width: 200px;
+  height: 150px;
+  position: fixed;
+  align-items: center;
+  font-size:20px;
+}
+.search{
+    width: 100%;
+    /*height: 45px;*/
+    height: 90rpx;
+    display: flex;
+    display: -webkit-box;
+    flex-direction: row;
+    -webkit-box-orient: horizontal;
+    align-items: center;
+    -webkit-box-align: center;
+    justify-content: space-between;
+    background: #f2f2f2;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border-bottom: 1px solid #f5f5f5;
+}
+.search:after{
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid #D7D6DC;
+    color: #D7D6DC;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+}
+.search-bar{
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 5px;
+  flex: 1;
+  -webkit-box-flex: 1;
+  padding:2px 3px;
+}
+.search-bar i{
+    display: inline-block;
+    vertical-align: middle;
+    font: normal normal normal 14px/1 "weui";
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    color: #b2b2b2;
+}
+.search-bar i:before{
+  content: "\EA0E";
+  display: inline-block;
+  margin-left: .2em;
+  margin-right: .2em;
+}
+.search .cancel{
+  width: 40px;
+  text-align: right;
+  color: #EF4746;
+}
+.search-bar input{
+   text-align: left;
+    flex: 1;
+    border-radius: 5px;
+    background-color: #fff;
+    color:#b2b2b2;
+}
+
+
+/**/
+.search-bars{
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 5px;
+  flex: 1;
+  -webkit-box-flex: 1;
+  padding: 5px 3px;
+  text-align: center;
+  justify-content: center;
+}
+.search-bars i{
+    display: inline-block;
+    vertical-align: middle;
+    font: normal normal normal 14px/1 "weui";
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    color: #b2b2b2;
+}
+.search-bars i:before{
+  content: "\EA0E";
+  display: inline-block;
+  margin-left: .2em;
+  margin-right: .2em;
+}
+.search-bars span{
+    text-align: left;
+    border-radius: 5px;
+    background-color: #fff;
+    color:#b2b2b2;
+}
+.abs{
+    border: 1px #b2b2b2 solid; 
+    border: none; 
+    padding-left: 10px;
+    height: 20px; 
+    line-height: 20px;
+}
+
+
+
+.hideClass{
+  display: none;
+}
+.none{
+  display: none;
+}
+.search .showClass{
+  display: flex;
+}
+.showCancel{
+  display: block;
+}
+
+/**/
+.subclass{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 94.5vh;
+}
+.sub-left{
+    width: 23%;
+    height: 90%;
+}
+.sub-left .ul-left view{
+    height: 60px;
+    line-height: 60px;
+    background: #fafafa;
+    border-bottom: 1px solid #f2f2f2;
+}
+.sub-left .ul-left view.active{
+    background: #fff;
+    color:#EF4746;
+}
+.sub-right{
+    width: 75%;
+    height: 90%;
+    background: #fff;
+    margin-top:5px;
+}
+.sub-right .title{
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    text-align: left;
+    background: #fff;
+    box-sizing: border-box;
+    color: #646464;
+    padding: 0px 10px 10px 10px
+}
+
+.sub-right .lists-img image{
+    width: 60px;
+    height: 60px;
+}
+.sub-right .lists-img p{
+    text-align: center;
+    color: #c0c0c0;
+    height:35px;
+    line-height:35px;
+    overflow: hidden;
+}
+
+.colsview {
+    display: flex;
+    align-items: center;
+    padding: 10rpx;
+}
+.colsview > image{
+    width: 10vh;
+    height: 10vh;
+   margin-right: 20rpx;
+   border-radius: 5rpx;
+}
+.colsview > .goods {
+    flex:1;
+    height: 10vh;
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+}
+.counter{
+    height: 10vh;
+    display: flex; 
+    justify-content: center;
+    align-items:flex-end;
+    padding-right:0px; 
+     position:absolute;
+     width: 15vh;
+     right:0px;
+     padding-bottom: 0px;
+    
+}
+.sub-lists {
+    padding-bottom:10px;
+}
+.hdsp{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.hdcss{
+  font-size: 16px;
+  margin-right: 10px;
+  color: #fd7601;
+}
+.coltex{
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.vipPrice {
+    color: red;
+    display: flex;
+}
+.Price {
+    display: flex;
+}
+.discount{
+    text-align: left;
+    font-size: 20rpx;
+    color: orange;
+    padding-left: 10rpx;
+    margin-bottom: 10rpx;
+}
+.empty {
+    color: #999;
+    font-size: 32rpx;
+    padding: 20px;
+}
+.auth{
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+
+.mask{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: darkgrey;
+  z-index: 9000;
+  opacity: 0.7;
+}
+ 
+.modalText {
+   font-size: 32rpx;
+   color: chocolate;
+   margin-bottom: 30rpx;
+}
+
+.modalDlg{
+  width: 580rpx;
+  height: 160rpx;
+  position: fixed;
+  padding-top: 30rpx;
+  top: 50%;
+  left: 0;
+  z-index: 9999;
+  margin: -370rpx 85rpx;
+  background-color: #fff;
+  border-radius: 36rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/** 修改button默认的点击态样式类**/
+.modalButton {
+   width:100%;
+   font-family: fantasy;
+   border-radius: 0;
+}
+
+.modalButton::after {
+   border:none;
+   border-radius: 0;
+}

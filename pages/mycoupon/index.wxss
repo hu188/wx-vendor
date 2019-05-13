@@ -1,0 +1,136 @@
+/* pages/mycenter/mycoupon.wxss */
+/*tab切换样式START*/
+.nav {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  border-bottom: 1px solid gainsboro;
+}
+
+.default {
+  line-height: 80rpx;
+  text-align: center;
+  flex: 1;
+  border-right: 1px solid gainsboro;
+  color: #000;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.red {
+  line-height: 80rpx;
+  text-align: center;
+  color: #fc5558;
+  flex: 1;
+  border-right: 1px solid gainsboro;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.show {
+  display: block;
+  text-align: center;
+  /*line-height:200rpx;*/
+}
+
+.hidden {
+  display: none;
+  text-align: center;
+  line-height: 200px;
+}
+
+/*tab切换样式END*/
+
+/*优惠券显示样式start*/
+
+.coupon_li {
+  width: 96%;
+  height: 60px;
+  margin: 0px auto;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 5px;
+  padding: 5px 0px;
+  background-color: rgba(224, 120, 135, 1);
+  display: flex;
+  flex-flow: row nowrap;
+}
+.coupon_moneyandinfo {
+  width: 85%;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.coupon_select {
+  width: 15%;
+  height: 70px;
+  /* background-color: #ff9000; */
+  margin-top: -5px;
+  position: relative;
+}
+.cou_img{
+width:64px;
+height:64px;
+display:inline-block;
+overflow:hidden;
+}
+
+.coupon_price {
+  font-size: 17px;
+  line-height: 60px;
+  color: #fff;
+  font-family: "Arial";
+  text-align: center;
+  flex: 1;
+  border-right: 1px dashed #fff;
+  padding: 0px 5px;
+}
+
+.coupon_price text {
+  display: inline;
+}
+.coupon_info {
+  width: 70%;
+  padding: 0px 15px;
+  overflow: hidden;
+}
+
+.coupon_info view {
+  height: 20px;
+  line-height: 20px;
+  overflow: hidden;
+  flex: 1;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  color: #fff;
+}
+
+.coupon_info span {
+  display: inline;
+}
+.coupon_select view {
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  padding: 14px 15%12px;
+}
+.selldone, .getdone {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  overflow: visible;
+  left: 2%;
+  /* display:none;  */
+}
+
+.hintinto {
+  font-size: 13px;
+  margin-top: 15px;
+}
+
+/*优惠券显示样式end*/

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "确认订单",
+  "usingComponents": {
+    "i-toast": "../../components/toast/index",
+    "i-message": "../../components/message/index"
+  }
+}

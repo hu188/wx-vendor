@@ -1,0 +1,15 @@
+<wxs  module="price" src="../../utils/common.wxs"/>
+<view class="cart" hidden='{{count < 0}}'>
+  <view>
+    <view class="icon">
+      <badge count='{{count}}'>
+        <icon type="publishgoods_fill" color="#fff" size="32"></icon>
+      </badge>
+    </view>
+    <text class="tips" wx:if='{{count*1===0}}'>未选购商品</text>
+    <view class="tips"wx:else><text>总计:</text><text style='color:#ff0000;'>￥{{price.price(total)}}</text></view>
+    <view class="tips" wx:if="{{discount*1 >0}}"><text>优惠:</text><text style='color:#ff0000;'>￥{{price.price(discount)}}</text></view>
+  </view>
+  <view  catchtap="onSubmit">去结算</view>
+
+</view>

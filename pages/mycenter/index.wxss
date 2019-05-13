@@ -1,0 +1,284 @@
+/* pages/mycenter/mycenter.wxss */
+.container{
+    width: 100%;
+}
+.exit{
+  color: blue;
+  font-size: 16px; 
+}
+.myorder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+}
+
+.listclass {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  align-items: center;
+}
+
+.listclass .iconfirst {
+  width: 30px;
+  height: 30px;
+  opacity:0.6;
+  display: block;
+  margin: 0 auto;
+}
+.listclass navigator{
+
+  border: 0px !important;
+}
+.myorder .iconfirst {
+  width: 28px;
+  height: 28px;
+  padding-right: 10px;
+}
+
+.iconsecond {
+  width: 12px;
+  height: 13px;
+  margin-left: 10px;
+  opacity:0.6;
+}
+
+.myordertext {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container1 {
+  background-color: #f2f2f2;
+  min-height: 100vh;
+  justify-content: initial;
+}
+
+.color {
+   height: 30px;
+  line-height: 30px;
+  width: 80%;
+  font-size: 14px;
+    margin: 0px auto;
+}
+
+.pagetop {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.userinfo {
+  width: 100%;
+  height: 100%;
+  background: url(http://mshop.yiyao365.cn/theme/default/images/wap/background.png) no-repeat;
+  background-size: cover;
+  display: -webkit-flex;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.userinfo .userinfo-avatar {
+  width: 120px;
+  height: 120px;
+  display: block;
+  border-radius: 50%;
+  margin: 0 20rpx;
+}
+.userinfo .vip {
+  width: 30px;
+  height: 20px;
+  display: block;
+  margin: 0 20rpx;
+}
+
+.userinfo .userinfo-nickname {
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+}
+
+.userinfo .logininfo {
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  width: 100px;
+  color: blue;
+  margin: 0px auto;
+}
+
+.pagenav {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+.pagenav div {
+  flex: 1;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.pagenav div:first-child {
+  border-right: 1px dashed #f2f2f2;
+}
+
+.orderinfo {
+  width: 100%;
+  height: auto;
+  background-color: #f2f2f2;
+}
+
+.orderList {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #fff;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.tab_div {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ico1 {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ico1 image {
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+}
+
+.ico2 image {
+  width: 12px;
+  height: 13px;
+  opacity:0.6;
+}
+
+.tab_span {
+  font-size: 14px;
+  color: #646464;
+}
+
+.order-list-all {
+  background: #fff;
+  box-sizing: border-box;
+  padding: 0px 10px;
+  margin-bottom: 5px;
+}
+
+.order-list-all navigator {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.order-list-all navigator:last-child {
+  border-bottom: none;
+}
+.ordernum_icon1{
+   position: relative;
+    z-index: 2;
+    color: #fff;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    overflow: hidden;
+    top: -56px;
+    left: 57%;
+    padding: 3px;
+    border-radius: 50%;
+    font-size: 12px;
+  }
+  .ordernum_icon2{
+   position: relative;
+    z-index: 2;
+    background: #f60;
+    color: #fff;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    overflow: hidden;
+    top: -56px;
+    left: 57%;
+    padding: 3px;
+    border-radius: 50%;
+    font-size: 12px; 
+  }
+  .ordernum_icon3{
+   position: relative;
+    z-index: 2;
+    background: #f60;
+    color: #fff;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    overflow: hidden;
+        top: -56px;
+    left: 57%;
+    padding: 3px;
+    border-radius: 50%;
+    font-size: 12px;
+  }
+  .ordernum_icon4{
+    position: relative;
+    z-index: 2;
+    background: #f60;
+    color: #fff;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    overflow: hidden;
+        top: -56px;
+    left: 57%;
+    padding: 3px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+.ordernum_view {
+  background: #f60;
+}
+.footer{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    color: #ccc;
+    margin-bottom: 55px;
+    text-align: center;
+}
+.concat {
+  width: 100%;
+  border: 0;
+  background: #fff;
+  padding: 0;
+  line-height: 48rpx;
+}
+.concat::before{
+  display: none;
+}
+.concat::after{
+  display: none;
+}

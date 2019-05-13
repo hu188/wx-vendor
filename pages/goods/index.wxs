@@ -1,0 +1,55 @@
+var basePath = 'https://www.tianrenyun.com/qsqFile/filelib/imagelib/dealerlib/'
+module.exports = {
+  convertImagePath: function (id, suffix = '.jpg') {
+    return basePath + id + suffix
+  },
+  getCoupon: function (data) {
+    if (data && data.commodityCouponRelations) {
+      var result;
+      for (var i = 0; i < data.commodityCouponRelations.length; i++) {
+        var item = data.commodityCouponRelations[i]
+        if (item && item.coupon) {   
+          var coupon = item.coupon
+          if (coupon.startTime && coupon.endTime) {
+            var start = convertTime(coupon.startTime)
+            var end = convertTime(coupon.endTime)
+            var now = getDate().getTime()
+            var mode = coupon.mode * 1
+            var date = coupon.date
+            var couponType = coupon.couponType
+            if (now >= start && now <= end) {
+              if (mode === 1) { // 每天
+                result = coupon
+                if (couponType==7){
+                  break
+                }
+                
+              } else if (mode === 2) { //每周
+                var day = getDate().getDay()
+                if (date.indexOf(day) > -1) {
+                  result = coupon
+                  if (couponType == 7) {
+                    break
+                  }
+                }
+              } else if (mode === 3) { //每月
+                var day = getDate().getDate()
+                if (date.indexOf(day) > -1) {
+                  result = coupon
+                  if (couponType == 7) {
+                    break
+                  }
+                }
+              }
+              
+            }
+          }
+        }
+      }
+      return result
+    }
+  }
+}
+function convertTime(time) {
+  return getDate(getDate().getFullYear() + '/' + (getDate().getMonth() + 1) + '/' + getDate().getDate() + ' ' + time).getTime()
+}

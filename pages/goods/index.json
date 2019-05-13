@@ -1,0 +1,8 @@
+{
+  "usingComponents":{
+    "cart":"../../components/cart/index",
+     "input-number":"../../components/input-number/index",
+      "i-toast": "../../components/toast/index",
+      "i-tab": "../../components/tabbar/index"
+  }
+}

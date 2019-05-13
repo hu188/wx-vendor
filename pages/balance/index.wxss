@@ -1,0 +1,49 @@
+.zhye {
+    width: 100%;
+    text-align: center;
+    margin-top: 200rpx;
+    font-size: 28rpx;
+}
+
+.zhye_1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 20rpx;
+    font-size: 100rpx;
+    font-weight: 700;
+}
+
+.smwz {
+    text-align: center;
+    margin-top: 150rpx;
+    position: relative;
+    background-color: #70be68;
+}
+
+.smgw {
+    width: 90%;
+    height: 100rpx;
+    line-height: 100rpx;
+    background-color: #70be68;
+    color: #ffffff;
+    border-radius: 20rpx;
+    font-size: 36rpx;
+    font-weight: 500;
+    position: absolute;
+    left: 45%;
+    margin-left: -40%;
+}
+.tx {
+    width: 90%;
+    height: 100rpx;
+    line-height: 100rpx;
+    background-color: #70be68;
+    color: #ffffff;
+    border-radius: 20rpx;
+    font-size: 36rpx;
+    font-weight: 500;
+    position: absolute;
+    top: 80px;
+    left: 45%;
+    margin-left: -40%;
+}

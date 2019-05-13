@@ -1,0 +1,76 @@
+<!--pages/mycenter/mycoupon.wxml-->
+<!--tab切换效果开始-->
+<view class="nav bc_white">
+  <view class="{{selected?'red':'default'}}" onTap="selected">未使用</view>
+  <view class="{{selected1?'red':'default'}}" onTap="selected1">已使用</view>
+  <view class="{{selected2?'red':'default'}}" onTap="selected2">已过期</view>
+</view>
+<view class="product_details {{selected2?'show':'hidden'}}">
+  <!--已过期优惠券-->
+  <view a:if="{{coupon_lose!=null||coupon_lose.length>0}}" class="coupon_body_eveycoupon" a:for="{{coupon_lose}}" a:for-index="idx" a:for-item="itemName">
+    <view class="coupon_li" style="background-color:#cccccc;">
+      <view class="coupon_moneyandinfo" onTap="getcouponinfo" data-couponname="{{itemName.NAME}}" data-starttime="{{itemName.STARTDATE}}" data-endtime="{{itemName.ENDDATE}}" data-price="{{itemName.LIMITAMOUNT}}" data-useofrange="{{goodsinfo[itemName.GUID].NAME}}" data-detailedurl="{{goodsinfo[itemName.GUID].GOODSGUID}}">
+        <view class="coupon_price">
+          <text>￥</text>
+          <text>{{itemName.AMOUNT}}</text>
+        </view>
+        <view class="coupon_info">
+          <view class="coupon_name">{{itemName.NAME}}</view>
+          <view class="valid_date">有效期{{itemName.STARTDATE}} 至 {{itemName.ENDDATE}}</view>
+          <view class="limit_info">订单满 {{itemName.LIMITAMOUNT}} 元可用（不含运费）</view>
+        </view>
+      </view>
+      <view class="coupon_select">
+        <image class="selldone" src="../images/overdue.png"></image>
+      </view>
+    </view>
+  </view>
+  <view a:if="{{coupon_lose.length==0 && selected2}}" class="hintinto">    您还没有此类优惠券信息哦~~  </view>
+  <view class="space"></view>
+</view>
+<view class="product_details {{selected1?'show':'hidden'}}">
+  <!--已使用优惠券-->
+  <view a:if="{{coupon_used!=null||coupon_used.length>0}}" class="coupon_body_eveycoupon" a:for="{{coupon_used}}" a:for-index="idx" a:for-item="itemName">
+    <view class="coupon_li" style="background-color:#cccccc;">
+      <view class="coupon_moneyandinfo" onTap="getcouponinfo" data-couponname="{{itemName.NAME}}" data-starttime="{{itemName.STARTDATE}}" data-endtime="{{itemName.ENDDATE}}" data-price="{{itemName.LIMITAMOUNT}}" data-useofrange="{{goodsinfo[itemName.GUID].NAME}}" data-detailedurl="{{goodsinfo[itemName.GUID].GOODSGUID}}">
+        <view class="coupon_price">
+          <text>￥</text>
+          <text>{{itemName.AMOUNT}}</text>
+        </view>
+        <view class="coupon_info">
+          <view class="coupon_name">{{itemName.NAME}}</view>
+          <view class="valid_date">有效期{{itemName.STARTDATE}} 至 {{itemName.ENDDATE}}</view>
+          <view class="limit_info">订单满 {{itemName.LIMITAMOUNT}} 元可用（不含运费）</view>
+        </view>
+      </view>
+      <view class="coupon_select">
+        <image class="selldone" src="../images/overused.png"></image>
+      </view>
+    </view>
+  </view>
+  <view a:if="{{coupon_used.length==0 && selected1}}" class="hintinto">    您还没有此类优惠券信息哦~~  </view>
+  <!--优惠券-->
+  <view class="space"></view>
+</view>
+<view class="product_details {{selected?'show':'hidden'}}">
+  <!--未使用优惠券-->
+  <view a:if="{{coupon_new!=null||coupon_new.length>0}}" class="coupon_body_eveycoupon" a:for="{{coupon_new}}" a:for-index="idx" a:for-item="itemName">
+    <view class="coupon_li">
+      <view class="coupon_moneyandinfo" onTap="getcouponinfo" data-couponname="{{itemName.NAME}}" data-starttime="{{itemName.STARTDATE}}" data-endtime="{{itemName.ENDDATE}}" data-price="{{itemName.LIMITAMOUNT}}" data-useofrange="{{goodsinfo[itemName.GUID].NAME}}" data-detailedurl="{{goodsinfo[itemName.GUID].GOODSGUID}}">
+        <view class="coupon_price">
+          <text>￥</text>
+          <text>{{itemName.AMOUNT}}</text>
+        </view>
+        <view class="coupon_info">
+          <view class="coupon_name">{{itemName.NAME}}</view>
+          <view class="valid_date">有效期{{itemName.STARTDATE}} 至 {{itemName.ENDDATE}}</view>
+          <view class="limit_info">订单满 {{itemName.LIMITAMOUNT}} 元可用（不含运费）</view>
+        </view>
+      </view>
+      <!-- <view class="coupon_select"><image class="selldone" src="../images/overused.png"></image></view> -->
+    </view>
+  </view>
+  <view a:if="{{coupon_new.length==0 && selected}}" class="hintinto">    您还没有此类优惠券信息哦~~  </view>
+  <!--优惠券-->
+</view>
+<!--tab切换效果结束-->

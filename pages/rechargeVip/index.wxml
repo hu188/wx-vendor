@@ -1,0 +1,21 @@
+<view class="disl">
+  <view wx:if="{{isVip==1}}">
+    会员有效期至：{{endTime}}
+  </view>
+  <view wx:elif="{{money>0}}">
+    <view class="smgg" wx:if="{{giveMoney>0}}">
+      尊敬的用户您好！会员包月充值金额为{{money}}元，首次充值会员，商家会赠送{{giveMoney}}元，会员每天可享受一次优惠。
+    </view>
+    <view class="smgg" wx:else>
+      尊敬的用户您好！会员包月充值金额为{{money}}元，会员每天可享受一次优惠。
+    </view>
+    <view bindtap="czsave" class="smgw">
+      充值会员
+    </view>
+  </view>
+  <view wx:else class="no-branchw">
+    商家还未开放会员功能哦~
+  </view>
+</view>
+
+<i-toast id="toast" />
