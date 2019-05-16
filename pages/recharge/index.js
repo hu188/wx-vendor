@@ -1,5 +1,8 @@
 let app = getApp();
-import { http } from '../../utils/http'
+import { http } from '../../utils/http';
+import {
+  encode
+} from '../../utils/encode';
 const {
   $Toast
 } = require('../../components/base/index');
@@ -10,7 +13,21 @@ Page({
     ]
   },
   onLoad: function (e) {
-    http('qsq/service/external/recharge/index', app.globalData.type, 1).then(res => {
+    const {type,level} = app.globalData.type
+    const params = {
+      sign: encode({
+        type: type,
+        levelTypeId: level,
+        rechargeType: "0",
+      }, app.globalData.sessionId),
+      sessionId: app.globalData.sessionId,
+      params: {
+        type: type,
+        levelTypeId: level,
+        rechargeType: "0",
+      }
+    }
+    http('qsq/service/external/recharge/index',params,1, 1).then(res => {
       this.setData({
         czlist: res
       })
@@ -26,13 +43,22 @@ Page({
     const { czlist, xz} = this.data
     const item = czlist[xz]
     const {money, giveMoney} = item
-    const param = {
-      userId: app.globalData.userId,
-      totalFee: money,
-      give: giveMoney,
-      appid:app.globalData.id
+    const params = {
+      sign: encode({
+        userId: app.globalData.userId,
+        totalFee: money,
+        give: giveMoney,
+        appid: app.globalData.id
+      }, app.globalData.sessionId),
+      sessionId: app.globalData.sessionId,
+      params: {
+        userId: app.globalData.userId,
+        totalFee: money,
+        give: giveMoney,
+        appid: app.globalData.id
+      }
     }
-    http('qsq/service/external/recharge/recharge', param, 1).then(res => {
+    http('qsq/service/external/recharge/recharge', params, 1,1).then(res => {
       const { nonceStr, packageValue, paySign, signType, timeStamp} = res
       wx.requestPayment({
         timeStamp: res.timeStamp + '',

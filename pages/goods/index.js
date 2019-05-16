@@ -62,8 +62,8 @@ Page({
     });
     //type为1正式版，type为2本地测试 tp为1多货道，tp为0单货道
     //BmcKLAeVhAeVhAc BmcKLBoLBoLBpBq
-    var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=BmcKLBoLBoLBpBq&type=1&appid=4&tp=1'
-   //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=&type=1&appid=9&tp=' 
+    var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=BmcKLAeVhAeVhAc&type=2&appid=6&tp=1'
+   //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=&type=1&appid=4&tp=' 
    
     if (options.q) {
       url = decodeURIComponent(options.q);
@@ -80,26 +80,26 @@ Page({
         wx.getUserInfo({
           success: result => {
             const data = {
-              "jsCode": res.code,
-              "type": "1",
-              "id": app.globalData.id,
-              ...result
+              "code": res.code,
+              "keyPoolId": app.globalData.id, //小程序id
             }
-             http('qsq/service/external/user/login', JSON.stringify(data), 1, 1).then(res => {
-          //  http('qsq/miniService/miniProComm/weChatCommon/commonLogin', JSON.stringify(data), 1, 1).then(res => {
-          
-              const { isvip, id, firstbuy, chargeMoney, nickname } = res
-             
+            let { encryptedData, iv } = result
+
+            http('qsq/miniService/miniProComm/weChatCommon/commonLogin', JSON.stringify(data), 1, 1).then(lres => {
+              const { isVip, id, firstBuy, chargeMoney, optFlag } = lres
+
               app.globalData.userId = id
-              app.globalData.isVip = isvip
-              app.globalData.balance = chargeMoney/100
-                app.globalData.nickname = nickname
-              const { levelTypeId, type } = res;
+              app.globalData.isVip = optFlag=="0"?"0":isVip
+              app.globalData.sessionId = lres.sessionId;
+              app.globalData.balance = optFlag == "0" ? 0:chargeMoney/100
+      
+              app.globalData.nickname = this.data.userNick
+              const { levelTypeId, type } = lres;
               app.globalData.type = { level: levelTypeId, type }
                  _self.setData({
                    isVip: app.globalData.isVip,
                  })
-              var buyDate = new Date(firstbuy)
+              var buyDate = new Date(firstBuy)
               var now = new Date()
               if (buyDate.toLocaleDateString() != now.toLocaleDateString()) {
                 app.globalData.isFirstBuy = 1
@@ -108,16 +108,31 @@ Page({
                 })
               }
               wx.clearStorageSync()
-              wx.hideTabBar()
-              //根据设备名查找设备
+  
+              const params = {
+                sign: encode({
+                  openid: lres.openid,
+                  encryptedData: encryptedData,
+                  iv: iv
+                }, lres.sessionId),
+                sessionId: lres.sessionId,
+                params: {
+                  openid: lres.openid,
+                  encryptedData: encryptedData,
+                  iv: iv
+                }
+              }
+              http('qsq/miniService/miniProComm/weChatCommon/saveAnalysisData', JSON.stringify(params), 1, 1).then(sres => {
+             //根据设备名查找设备
               this.queryDevice(this.data.sign)
+              })
+  
             })
           }
         })
       }
     })
   },
-
   getUserInfo: function (e) {
     app.globalData.userInfo = e.detail.userInfo
     const { errMsg } = e.detail
@@ -168,7 +183,16 @@ Page({
   //根据设备名查找设备
   queryDevice(sign){
     if (sign) {
-      http('qsq/service/external/device/query', { sign: sign }, 1).then(res => {
+      const params = {
+        sign: encode({
+          sign: sign
+        }, app.globalData.sessionId),
+        sessionId: app.globalData.sessionId,
+        params: {
+          sign: sign
+        }
+      }
+      http('qsq/service/external/device/query', JSON.stringify(params), 1, 1).then(res => {
         this.setData({
           classify: res[0].classify,
           deviceId: res[0].deviceId
@@ -183,7 +207,16 @@ Page({
   //根据设备id查找商品
   queryGoods(deviceId, selectType){
     var xuhao=[];
-    http('qsq/service/external/goods/queryGoods', { deviceId: deviceId }, 1).then(res => {  
+    const params = {
+      sign: encode({
+        deviceId: deviceId
+      }, app.globalData.sessionId),
+      sessionId: app.globalData.sessionId,
+      params: {
+        deviceId: deviceId
+      }
+    }
+    http('qsq/service/external/goods/queryGoods',params,1, 1).then(res => {  
       //EE类型设备
       if (this.data.classify.indexOf("EE")!=-1){
       for(var i=0;i<res.length;i++){
@@ -414,7 +447,16 @@ Page({
 
   onShow (){
     if (app.globalData.userId){
-      http('qsq/service/external/recharge/queryBalance', { userId: app.globalData.userId }, 1).then(res => {
+      const params = {
+        sign: encode({
+          userId: app.globalData.userId
+        }, app.globalData.sessionId),
+        sessionId: app.globalData.sessionId,
+        params: {
+          userId: app.globalData.userId
+        }
+      }
+      http('qsq/service/external/recharge/queryBalance', params,1,1).then(res => {
         var buyDate = new Date(res.firstbuy)
         var now = new Date()
         if (buyDate.toLocaleDateString() != now.toLocaleDateString()) {

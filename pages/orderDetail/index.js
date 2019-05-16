@@ -1,6 +1,7 @@
 const app = getApp();
 import common from '../..//utils/common';
 import util from '../../utils/util';
+import { encode } from '../../utils/encode';
 import {
   http
 } from '../../utils/http';
@@ -32,8 +33,16 @@ Page({
       orderNo: orderNo
     })
 
-   
-    http('qsq/service/external/order/queryDetail', { orderNo: orderNo}, 1).then(res => {
+    const params = {
+      sign: encode({
+        orderNo: orderNo
+      }, app.globalData.sessionId),
+      sessionId: app.globalData.sessionId,
+      params: {
+        orderNo: orderNo
+      }
+    }
+    http('qsq/service/external/order/queryDetail', params,1, 1).then(res => {
       this.setData({
         orders: res,
       })
@@ -47,9 +56,16 @@ Page({
     //再查询商品
     if (app.globalData.classify.indexOf("FF") != -1) {
       //根据设备id查找商品
-      http('qsq/service/external/goods/queryGoods', {
-        deviceId: app.globalData.deviceId
-      }, 1).then(res => {
+      const params = {
+        sign: encode({
+          deviceId: app.globalData.deviceId
+        }, app.globalData.sessionId),
+        sessionId: app.globalData.sessionId,
+        params: {
+          deviceId: app.globalData.deviceId
+        }
+      }
+      http('qsq/service/external/goods/queryGoods',params,1, 1).then(res => {
         //FF类型设备
         var goodsRoadColumn = res[0].goodsRoadColumn;
         var goods = res[0].goodsRoad1;
@@ -76,11 +92,19 @@ Page({
         this.setData({
           allGoodList: arr
         })
-
-        http('qsq/service/external/device/queryStatus', {
-          sign: app.globalData.sign,
-          id: app.globalData.id
-        }, 1).then(res => {
+        //查询设备状态（在线、离线、设备忙）
+        const params = {
+          sign: encode({
+            sign: app.globalData.sign,
+            appid: app.globalData.id
+          }, app.globalData.sessionId),
+          sessionId: app.globalData.sessionId,
+          params: {
+            sign: app.globalData.sign,
+            appid: app.globalData.id
+          }
+        }
+        http('qsq/service/external/device/queryStatus', JSON.stringify(params), 1, 1).then(res => {
           if (res == '') {
         
             const {
@@ -108,13 +132,22 @@ Page({
                 //余额支付
                 if (totalMoney <= balance) { //余额大于支付金额
                   var devId = app.globalData.classify.indexOf("FF") != -1?app.globalData.deviceId:''
-                  const param = {
-                    orderNo: orderNo,
-                    userId: app.globalData.userId,
-                    deviceId: devId
+              
+                  const params = {
+                    sign: encode({
+                      orderNo: orderNo,
+                      userId: app.globalData.userId,
+                      deviceId: devId
+                    }, app.globalData.sessionId),
+                    sessionId: app.globalData.sessionId,
+                    params: {
+                      orderNo: orderNo,
+                      userId: app.globalData.userId,
+                      deviceId: devId
+                    }
                   }
                   //余额支付
-                  http('qsq/service/external/pay/balancePay', param, 1).then(res => {
+                  http('qsq/service/external/pay/balancePay', params, 1,1).then(res => {
                     const {
                       id
                     } = res
@@ -125,9 +158,17 @@ Page({
                         type: 'success'
                       });
                       app.globalData.isFirstBuy = 0
-                      http('qsq/service/external/user/updateUser', {
-                        userId: app.globalData.userId
-                      }, 1).then(res => {
+
+                      const params = {
+                        sign: encode({
+                          userId: app.globalData.userId
+                        }, app.globalData.sessionId),
+                        sessionId: app.globalData.sessionId,
+                        params: {
+                          userId: app.globalData.userId
+                        }
+                      }
+                      http('qsq/service/external/user/updateUser', params,1,1).then(res => {
                         const {
                           chargeMoney
                         } = res
@@ -164,14 +205,24 @@ Page({
                 }
               } else {
                 //微信支付
-                const param = {
-                  userId: app.globalData.userId,
-                  orderNo,
-                  type: 1,
-                  tp: app.globalData.tp,
-                  appid: app.globalData.id
+                const params = {
+                  sign: encode({
+                    userId: app.globalData.userId,
+                    orderNo,
+                    type: 1,
+                    tp: app.globalData.tp,
+                    appid: app.globalData.id
+                  }, app.globalData.sessionId),
+                  sessionId: app.globalData.sessionId,
+                  params: {
+                    userId: app.globalData.userId,
+                    orderNo,
+                    type: 1,
+                    tp: app.globalData.tp,
+                    appid: app.globalData.id
+                  }
                 }
-                http('qsq/service/external/pay/getWeChatPayInfo', param, 1).then(res => {
+                http('qsq/service/external/pay/getWeChatPayInfo', params,1,1).then(res => {
                   wx.requestPayment({
                     timeStamp: res.timeStamp + '',
                     nonceStr: res.nonceStr,

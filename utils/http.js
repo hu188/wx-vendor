@@ -37,8 +37,11 @@ module.exports =  {
                     } else if (code * 1 === 0) {
                       resolve(data)
                     } 
-                     else if (status * 1 === 400) { //会话过期,重新登录
-                        getApp().login()
+                     else if (status * 1 === 78) { 
+                      wx.showToast({
+                        title: '请求发生错误！',
+                        icon: 'loading'
+                      })
                     } else {
                     }
                 },

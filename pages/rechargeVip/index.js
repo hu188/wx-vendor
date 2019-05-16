@@ -1,5 +1,8 @@
 let app = getApp();
-import { http } from '../../utils/http'
+import { http } from '../../utils/http';
+import {
+  encode
+} from '../../utils/encode';
 const {
   $Toast
 } = require('../../components/base/index');
@@ -13,7 +16,16 @@ Page({
     endTime:''
   },
   onLoad: function (e) {
-       http('qsq/service/external/recharge/queryBalance', { userId: app.globalData.userId }, 1).then(res => {
+    const params = {
+      sign: encode({
+        userId: app.globalData.userId
+      }, app.globalData.sessionId),
+      sessionId: app.globalData.sessionId,
+      params: {
+        userId: app.globalData.userId
+      }
+    }
+       http('qsq/service/external/recharge/queryBalance', params,1,1).then(res => {
        this.setData({
          isVip: res.isvip,
        })
@@ -23,8 +35,19 @@ Page({
          })
        }
     })
-    //{type:1}
-    http('qsq/service/external/vip/queryVipParam', app.globalData.type, 1).then(res => {
+    const { type, level } = app.globalData.type
+    const vipParams = {
+      sign: encode({
+        type: type,
+        level: level
+      }, app.globalData.sessionId),
+      sessionId: app.globalData.sessionId,
+      params: {
+        type: type,
+        level: level
+      }
+    }
+    http('qsq/service/external/vip/queryVipParam', vipParams,1, 1).then(res => {
       if (res != ''){
         this.setData({
           money: res[0].money ?res[0].money :0,
@@ -41,8 +64,22 @@ Page({
       give: this.data.giveMoney,
       appid: app.globalData.id
     }
-    
-    http('qsq/service/external/recharge/rechargeVip', param, 1).then(res => {
+    const params = {
+      sign: encode({
+        userId: app.globalData.userId,
+        money: this.data.money,
+        give: this.data.giveMoney,
+        appid: app.globalData.id
+      }, app.globalData.sessionId),
+      sessionId: app.globalData.sessionId,
+      params: {
+        userId: app.globalData.userId,
+        money: this.data.money,
+        give: this.data.giveMoney,
+        appid: app.globalData.id
+      }
+    }
+    http('qsq/service/external/recharge/rechargeVip', params,1, 1).then(res => {
       wx.requestPayment({
         timeStamp: res.timeStamp + '',
         nonceStr: res.nonceStr,
@@ -50,7 +87,16 @@ Page({
         signType: 'MD5',
         paySign: res.paySign,
         success: () =>{
-            http('qsq/service/external/recharge/queryBalance', { userId: app.globalData.userId }, 1).then(res => {
+          const params = {
+            sign: encode({
+              userId: app.globalData.userId
+            }, app.globalData.sessionId),
+            sessionId: app.globalData.sessionId,
+            params: {
+              userId: app.globalData.userId
+            }
+          }
+            http('qsq/service/external/recharge/queryBalance', params,1, 1).then(res => {
             app.globalData.balance = res.chargeMoney/100
             })
           app.globalData.isVip = 1
