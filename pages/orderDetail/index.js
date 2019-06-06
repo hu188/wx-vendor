@@ -185,7 +185,7 @@ Page({
                         money: this.data.totalMoney * 100,
                         send: 0
                       }, 1).then(res => { })
-                      wx.clearStorageSync();
+                 //     wx.clearStorageSync();
                       wx.switchTab({
                         url: '../order/index',
                       })
@@ -243,7 +243,7 @@ Page({
                           content: '支付成功',
                           type: 'success'
                         });
-                        wx.clearStorageSync();
+                   //     wx.clearStorageSync();
                         app.globalData.goodsList = []
                         wx.switchTab({
                           url: '../order/index',

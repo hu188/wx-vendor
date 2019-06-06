@@ -17,5 +17,8 @@ Component({
     onSubmit(ev) {
       this.triggerEvent('onSubmit')
     },
+    showCartList(e){
+      this.triggerEvent('showCartList')
+    }
   }
 })

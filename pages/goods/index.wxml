@@ -88,7 +88,40 @@
   </view>
 
 </view>
-<cart count='{{count}}' total='{{total}}' discount="{{discount}}" bindonSubmit='submitHandler'></cart>
-<!-- <button open-type='getUserInfo' bindgetuserinfo='getUserInfoFun' class='auth' wx:if='{{!auth}}'></button>  -->
+<!-- 购物车 -->
+<view class="drawer_screen" bindtap="showCartList" data-statu="close" wx:if="{{showCart}}"></view>
+<view class="cartlist-float" wx:if="{{showCart}}">
+  <view style='background:#F0F0F0;height:30px'>
+    <label class='label-cart-bar'>
+      <label style='padding:5px'>已选商品</label>
+      <label style='padding:5px' bindtap='clearCartList'><i-icon type="trash" size="20"/>清空购物车</label>
+    </label>
+
+  </view>
+  <scroll-view scroll-y="true" class="{{selectGoods.length>5?'cart-scroll-list':''}}">
+    <view class='cart-list-box' wx:for="{{selectGoods}}" wx:key="unique" style='border-bottom:1px #E3E3E3 solid'>
+      <view class='list-info'>
+        <view>{{item.commodityName}}{{item.s?'(货道:'+item.s+')':''}}</view>
+      </view>
+      <view style='width:50%;padding:10px;'>
+        <view style='display:flex;  align-items: center; justify-content: space-between;'>
+          <label class='activity-color'>¥ {{item.retailPrice}} x {{item.count}}</label>
+          <!-- <input-number value="{{item.count ||0}}" min="0" max="{{item.num}}" step="1" bindchange="addNumber" data-index='{{index}}'  /> -->
+               <view wx:if="{{item.num>0 && tp==1 && isVip == 1 && isFirstBuy==1 }}">
+                  <input-number value="{{item.count ||0}}" min="0" max="1" step="1" bindchange="{{count<1 || item.count==1?'addNumber':'noChangeNumber'}}" data-index='{{index}}'  />
+                </view>
+                <view wx:elif="{{item.num>0 && tp==1}}">
+                  <input-number value="{{item.count ||0}}" min="0" max="{{item.num}}" step="1" bindchange="addNumber" data-index='{{index}}' />
+                </view>
+                <view wx:elif="{{item.num>0 }}">
+                  <input-number value="{{item.count ||0}}" min="0" max="1" step="1" bindchange="{{count<1 || item.count==1?'addNumber':'noChangeNumber'}}" data-index='{{index}}'  />
+                </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+<cart count='{{count}}' total='{{total}}' discount="{{discount}}" bindonSubmit='submitHandler' bindshowCartList='showCartList'></cart>
+
 <i-tab></i-tab>
 <i-toast id="toast" />

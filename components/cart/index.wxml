@@ -1,7 +1,7 @@
 <wxs  module="price" src="../../utils/common.wxs"/>
 <view class="cart" hidden='{{count < 0}}'>
-  <view>
-    <view class="icon">
+  <view catchtap="showCartList" style='height:100%'>
+    <view class="icon" >
       <badge count='{{count}}'>
         <icon type="publishgoods_fill" color="#fff" size="32"></icon>
       </badge>

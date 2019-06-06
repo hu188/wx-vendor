@@ -37,6 +37,16 @@ Page({
   },
   onLoad(options) {
     wx.hideTabBar()
+    //type为1正式版，type为2本地测试 tp为1多货道，tp为0单货道
+    //BmcKLAeVhAeVhAc BmcKLBoLBoLBpBq
+    var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=BmcKLAeVhAeVhAc&type=2&appid=6&tp=1'
+    //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=AbVeVdVGAbVfAfVGAaeVGcdgVe&type=1&appid=4&tp=1'
+    //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=&type=1&appid=9&tp=' 
+
+    if (options.q) {
+      url = decodeURIComponent(options.q);
+    }
+    this.decodeUrl(url)
     //判断是否授权
     var _this = this;
     wx.getSetting({
@@ -50,6 +60,7 @@ Page({
                 hasUserInfo: true,
                 userNick: resSetting.userInfo.nickName
               });
+              _this.login()
             }
           });
         } else {
@@ -60,19 +71,12 @@ Page({
         }
       }
     });
-    //type为1正式版，type为2本地测试 tp为1多货道，tp为0单货道
-    //BmcKLAeVhAeVhAc BmcKLBoLBoLBpBq
-    var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=BmcKLAeVhAeVhAc&type=2&appid=6&tp=1'
-   //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=&type=1&appid=4&tp=' 
    
-    if (options.q) {
-      url = decodeURIComponent(options.q);
-    }
-    this.decodeUrl(url)
-    this.login()
+ 
   },
   
   login() {
+    
     var _self = this;
     wx.login({
       scopes: 'auth_user',
@@ -107,7 +111,7 @@ Page({
                   isFirstBuy: app.globalData.isFirstBuy,
                 })
               }
-              wx.clearStorageSync()
+             // wx.clearStorageSync()
   
               const params = {
                 sign: encode({
@@ -206,6 +210,7 @@ Page({
   },
   //根据设备id查找商品
   queryGoods(deviceId, selectType){
+
     var xuhao=[];
     const params = {
       sign: encode({
@@ -310,17 +315,29 @@ Page({
             goodsType: this.data.goodRoads.slice(0, end)
           })
           const aaa = arr.filter(item => item.typeName === this.data.selectType);
-          const hcList = wx.getStorageSync('list' + this.data.selectType);
-          if (hcList.length > 0) {
-            this.setData({
-              list: hcList
-            })
-          }else{
-            this.setData({
-              list: aaa,
-              s: this.data.s,
+          let selectGoods = this.data.selectGoods//购物车商品
+          for (var k = 0; k < selectGoods.length; k++) {
+            aaa.find((item) => {
+              if (item.goodId == selectGoods[k].goodId) {
+                item.count = selectGoods[k].count
+              }
             })
           }
+          this.setData({
+            list: aaa,
+            s: this.data.s,
+          })
+          // const hcList = wx.getStorageSync('list' + this.data.selectType);
+          // if (hcList.length > 0) {
+          //   this.setData({
+          //     list: hcList
+          //   })
+          // }else{
+          //   this.setData({
+          //     list: aaa,
+          //     s: this.data.s,
+          //   })
+          // }
         //不存在序号，一层显示
         }else{
           this.setData({
@@ -386,7 +403,7 @@ Page({
       }
       goods['count'] = value
       goods['coupons'] = item
-      const s = glist.filter(item => item.id != goods.id);
+    const s = glist.filter(item => item.goodId != goods.goodId);
       s.push(goods);
       this.setData({
         glist: s
@@ -438,13 +455,86 @@ Page({
         selectGoods: selectGoods
       })
       
-      wx.setStorage({
-        key: 'list' + this.data.selectType, // 缓存数据的key
-        data: list // 要缓存的数据
-      });
+      // wx.setStorage({
+      //   key: 'list' + this.data.selectType, // 缓存数据的key
+      //   data: list // 要缓存的数据
+      // });
      
   },
+  //显示购物车
+  showCartList: function () {
+    if (this.data.selectGoods.length != 0) {
+      this.setData({
+        showCart: !this.data.showCart,
+      });
+    }
 
+  },
+  addNumber: function ({ detail, target }) {
+    const { index } = target.dataset //商品下标
+    const { value, type } = detail //数量 按钮类型
+    let { list, count, total, selectGoods } = this.data
+    if (type === 'plus') {
+      count++
+    } else {
+      if (count > 0) {
+        count--
+      }
+    }
+    let curGood = selectGoods[index];
+    curGood.count = value
+    let totalPrice = selectGoods.reduce((total, cur) => {
+      if (cur.count * cur.retailPrice - cur.discount > 0) {
+        if (app.globalData.isVip == 1 && app.globalData.isFirstBuy == 1) {
+          return cur.count * cur.costPrice - cur.discount + total
+        }
+        return cur.count * cur.retailPrice - cur.discount + total
+      } else {
+        return 0.01 + total
+      }
+
+    }, 0)
+    let num = selectGoods.reduce((total, cur) => {
+      return cur.count + total
+    }, 0)
+    list.find((item) => {
+      if (item.goodId == selectGoods[index].goodId) {
+        item.count = selectGoods[index].count
+      }
+    })
+    selectGoods = selectGoods.filter(item => item.count && item.count > 0)
+    getApp().globalData.goodsList = selectGoods
+    if (count == 0) {
+      this.setData({
+        showCart: false
+      })
+    }
+    this.setData({
+      selectGoods: selectGoods,
+      total: totalPrice,
+      count: num,
+      list: list
+    });
+    // wx.setStorage({
+    //   key: 'list' + this.data.selectType, // 缓存数据的key
+    //   data: list // 要缓存的数据
+    // });
+  },
+  clearCartList() {
+    let { list, selectGoods } = this.data
+    list.find((item) => {
+      item.count = 0
+    })
+    this.setData({
+      selectGoods: [],
+      glist: [],
+      showCart: false,
+      total: 0,
+      count: 0,
+      list: list
+    });
+    app.globalData.goodsList = []
+  },
   onShow (){
     if (app.globalData.userId){
       const params = {
@@ -480,6 +570,8 @@ Page({
             discount: 0,
             count: 0,
             list: list,
+            selectGoods: [],
+            glist: []
           })
           if (this.data.deviceId) {
             this.queryGoods(this.data.deviceId, this.data.selectType)

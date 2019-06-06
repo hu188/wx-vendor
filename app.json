@@ -1,6 +1,5 @@
 {
   "pages": [
-   
     "pages/goods/index",
     "pages/rechargeVip/index",
     "pages/submitOrder/index",
@@ -10,22 +9,23 @@
     "pages/order/index",
     "pages/orderDetail/index",
     "pages/balance/index",
-    "pages/recharge/index"  
+    "pages/recharge/index"
   ],
   "window": {
-    "defaultTitle": "天任售货机平台",
-    "titleBarColor": "#0289d1",
     "backgroundColor": "#ffffff"
-    
   },
   "tabBar": {
-    "list": [{
-      "pagePath": "pages/goods/index"
-    },{
+    "list": [
+      {
+        "pagePath": "pages/goods/index"
+      },
+      {
         "pagePath": "pages/order/index"
-    },{
-      "pagePath": "pages/mycenter/index"
-    }]
-  }
- 
+      },
+      {
+        "pagePath": "pages/mycenter/index"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
 }
