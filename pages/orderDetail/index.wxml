@@ -45,18 +45,13 @@
         <view wx:if="{{orders[0].payType==7}}">微信支付</view>
         <view wx:if="{{orders[0].payType==8}}">余额支付</view>
       </view>
-    <!-- <picker value="{{paymentindex}}" range="{{paymentarray}}"  bindchange='changePay'>
-      <view class="picker">
-        <view>支付方式</view>
-        <view>{{paymentarray[paymentindex]}}</view>
-      </view>
-    </picker> -->
+
     <view class="picker" wx:else>
             <view>支付方式</view>
             <view>
               <radio-group bindchange="changePay" >
                  <radio value="{{0}}" checked="{{item.checked}}" checked='{{true}}'/>微信支付
-                 <radio value="{{1}}" checked="{{item.checked}}"/>余额支付
+                 <!-- <radio value="{{1}}" checked="{{item.checked}}"/>余额支付 -->
               </radio-group>
             </view>
         </view> 

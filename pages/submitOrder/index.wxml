@@ -50,7 +50,7 @@
             <view>
               <radio-group bindchange="bindPaymentChange" >
                  <radio value="{{0}}" checked="{{item.checked}}" checked='{{true}}'/>微信支付
-                 <radio value="{{1}}" checked="{{item.checked}}"/>余额支付
+                 <!-- <radio value="{{1}}" checked="{{item.checked}}" disabled="true"/>余额支付 -->
               </radio-group>
             </view>
         </view> 

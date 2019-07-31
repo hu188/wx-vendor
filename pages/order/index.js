@@ -57,10 +57,10 @@ Page({
           if (item.orderNo && !item.extendMsg) {
             newRes.push(item);
           } else if (item.extendMsg && item.extendMsg.substr(0, 2) == 'PC' && !pcOrder[item.extendMsg]) {
-            pcOrder[item.extendMsg] = item.extendMsg + '-' + item.money * item.cupsNumber;
+            pcOrder[item.extendMsg] = item.extendMsg + '-' + item.money ;
             newRes.push(item);
           } else if (item.extendMsg && item.extendMsg.substr(0, 2) == 'PC' && pcOrder[item.extendMsg]) {
-            const temp = parseFloat(pcOrder[item.extendMsg].split('-')[1]) + item.money * item.cupsNumber;
+            const temp = parseFloat(pcOrder[item.extendMsg].split('-')[1]) + item.money;
             pcOrder[item.extendMsg] = item.extendMsg + '-' + temp;
           }
           if (item.extendMsg && newRes[newRes.length - 1].extendMsg == item.extendMsg) {

@@ -40,8 +40,8 @@ Page({
     //type为1正式版，type为2本地测试 tp为1多货道，tp为0单货道
     //BmcKLAeVhAeVhAc BmcKLBoLBoLBpBq
     var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=BmcKLAeVhAeVhAc&type=2&appid=6&tp=1'
-    //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=AbVeVdVGAbVfAfVGAaeVGcdgVe&type=1&appid=4&tp=1'
-    //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=&type=1&appid=9&tp=' 
+  //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=AbVeVgVfAfVHAfVgfeVhcchVc&type=1&appid=20&tp=1'
+  //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=&type=1&appid=20&tp=' 
 
     if (options.q) {
       url = decodeURIComponent(options.q);
@@ -71,7 +71,16 @@ Page({
         }
       }
     });
-   
+    // const data = {
+    //   "keyPoolId": app.globalData.id, //小程序id
+    // }
+    // http('qsq/miniService/miniProComm/weChatCommon/saveSecretKey', JSON.stringify(data), 1, 1).then(res=>{
+    //   if (res.sessionId){
+    //     app.globalData.sessionId = res.sessionId;
+    //     this.queryDevice(this.data.sign)
+    //   }
+    
+    // })
  
   },
   
@@ -184,6 +193,10 @@ Page({
       tp: tp[1]
     });
   },
+  //扫码进入，发送73包
+  sendPacket(sign){
+  
+  }, 
   //根据设备名查找设备
   queryDevice(sign){
     if (sign) {
@@ -204,6 +217,24 @@ Page({
         app.globalData.deviceName = res[0].deviceName
         app.globalData.deviceId = res[0].deviceId
         app.globalData.classify = res[0].classify
+        const data = {
+          sign: encode({
+            deviceId: this.data.deviceId
+          }, app.globalData.sessionId),
+          sessionId: app.globalData.sessionId,
+          params: {
+            deviceId: this.data.deviceId
+          }
+        }
+        http('qsq/service/external/device/sendPacket', JSON.stringify(data), 1, 1).then(res=>{
+          if(res.result!=''){
+            $Toast({
+              content: res.result,
+              type: 'error'
+            });
+          }
+           
+        })
         this.queryGoods(this.data.deviceId, this.data.selectType)
       })
     }
