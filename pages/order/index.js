@@ -36,46 +36,69 @@ Page({
 
   //根据订单状态获取我的订单
   queryOrder: function(status) {
+    let that = this;
     const params = {
       sign: encode({
-        userId: app.globalData.userId,
+        cusId: app.globalData.userId,
         status: status
       }, app.globalData.sessionId),
       sessionId: app.globalData.sessionId,
       params: {
-        userId: app.globalData.userId,
+        cusId: app.globalData.userId,
         status: status
       }
     }
     const deviceId = getApp().globalData.deviceId
-    // const userId = getApp().globalData.userId
-    http('qsq/service/external/order/query', params, 1, 1).then(res => {
+    // const userId = getApp().globalData.userId  'qsq/service/external/order/query'
+    http('qsq/miniService/miniProComm/weChatCommon/getSpedingRecord', params, 1, 1).then(res => {
       if (res) {
-        var pcOrder = {};
-        var newRes = [];
-        res.find((item, index, arr) => {
-          if (item.orderNo && !item.extendMsg) {
-            newRes.push(item);
-          } else if (item.extendMsg && item.extendMsg.substr(0, 2) == 'PC' && !pcOrder[item.extendMsg]) {
-            pcOrder[item.extendMsg] = item.extendMsg + '-' + item.money ;
-            newRes.push(item);
-          } else if (item.extendMsg && item.extendMsg.substr(0, 2) == 'PC' && pcOrder[item.extendMsg]) {
-            const temp = parseFloat(pcOrder[item.extendMsg].split('-')[1]) + item.money;
-            pcOrder[item.extendMsg] = item.extendMsg + '-' + temp;
-          }
-          if (item.extendMsg && newRes[newRes.length - 1].extendMsg == item.extendMsg) {
-            newRes[newRes.length - 1].money = pcOrder[item.extendMsg].split('-')[1];
-          }
-        });
-        this.setData({
-          orderlist: newRes
+        // var pcOrder = {};
+        // var newRes = [];
+        // res.find((item, index, arr) => {
+        //   if (item.orderNo && !item.extendMsg) {
+        //     newRes.push(item);
+        //   } else if (item.extendMsg && item.extendMsg.substr(0, 2) == 'PC' && !pcOrder[item.extendMsg]) {
+        //     pcOrder[item.extendMsg] = item.extendMsg + '-' + item.money ;
+        //     newRes.push(item);
+        //   } else if (item.extendMsg && item.extendMsg.substr(0, 2) == 'PC' && pcOrder[item.extendMsg]) {
+        //     const temp = parseFloat(pcOrder[item.extendMsg].split('-')[1]) + item.money;
+        //     pcOrder[item.extendMsg] = item.extendMsg + '-' + temp;
+        //   }
+        //   if (item.extendMsg && newRes[newRes.length - 1].extendMsg == item.extendMsg) {
+        //     newRes[newRes.length - 1].money = pcOrder[item.extendMsg].split('-')[1];
+        //   }
+        // });
+        // this.setData({
+        //   orderlist: newRes
+        // })
+        // pcOrder = null;
+        // newRes = null;
+        let orderList = res.orderList;
+        for (var i = 0; i < orderList.length; i++) {
+          orderList[i].time = that.formatDateTime(orderList[i].createTime)
+        }
+        that.setData({
+          orderlist: orderList
         })
-        pcOrder = null;
-        newRes = null;
       }
     })
   },
-
+  //格式化时间
+  formatDateTime: function (inputTime) {
+    var date = new Date(inputTime);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    h = h < 10 ? ('0' + h) : h;
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    second = second < 10 ? ('0' + second) : second;
+    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+  },
   //订单状态切换
   choseorder: function(event) {
     const {
@@ -102,12 +125,12 @@ Page({
     } = e.currentTarget.dataset
     const params = {
       sign: encode({
-        sign: sign,
+        sign: app.globalData.sign,
         appid: app.globalData.id
       }, app.globalData.sessionId),
       sessionId: app.globalData.sessionId,
       params: {
-        sign: sign,
+        sign: app.globalData.sign,
         appid: app.globalData.id
       }
     }
@@ -115,11 +138,11 @@ Page({
       if (res == '') {
         const params = {
           sign: encode({
-            orderNo: orderNo
+            orderNo: orderno
           }, app.globalData.sessionId),
           sessionId: app.globalData.sessionId,
           params: {
-            orderNo: orderNo
+            orderNo: orderno
           }
         }
         http('qsq/service/external/order/queryDetail', params, 1, 1).then(res => {
@@ -155,14 +178,14 @@ Page({
     } = e.currentTarget.dataset
     const params = {
       sign: encode({
-        orderno: orderno,
+        orderNo: orderno,
         money: money,
         nickname: app.globalData.nickname,
         deviceName: app.globalData.deviceName
       }, app.globalData.sessionId),
       sessionId: app.globalData.sessionId,
       params: {
-        orderno: orderno,
+        orderNo: orderno,
         money: money,
         nickname: app.globalData.nickname,
         deviceName: app.globalData.deviceName

@@ -42,7 +42,8 @@ Page({
         orderNo: orderNo
       }
     }
-    http('qsq/service/external/order/queryDetail', params,1, 1).then(res => {
+   // http('qsq/service/external/order/queryDetail', params,1, 1).then(res => {
+    http('qsq/miniService/miniProComm/weChatCommon/saveOrderDetails', params, 1, 1).then(res => {
       this.setData({
         orders: res,
       })
@@ -211,7 +212,8 @@ Page({
                     orderNo,
                     type: 1,
                     tp: app.globalData.tp,
-                    appid: app.globalData.id
+                    keyPoolId: app.globalData.id,
+                    notifyUrl: 'NOTIFYURL_1',
                   }, app.globalData.sessionId),
                   sessionId: app.globalData.sessionId,
                   params: {
@@ -219,10 +221,12 @@ Page({
                     orderNo,
                     type: 1,
                     tp: app.globalData.tp,
-                    appid: app.globalData.id
+                    keyPoolId: app.globalData.id,
+                    notifyUrl: 'NOTIFYURL_1',
                   }
                 }
-                http('qsq/service/external/pay/getWeChatPayInfo', params,1,1).then(res => {
+                http('qsq/miniService/miniProComm/weChatCommon/saveCommonPay', params, 1, 1).then(res => {
+              //  http('qsq/service/external/pay/getWeChatPayInfo', params,1,1).then(res => {
                   wx.requestPayment({
                     timeStamp: res.timeStamp + '',
                     nonceStr: res.nonceStr,

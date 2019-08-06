@@ -15,7 +15,7 @@
           <navigator url="../orderDetail/index?orderNo={{item.extendMsg?item.extendMsg:item.orderNo}}&totalMoney={{item.money}}">
             <view class="od_top">
               <text>订单编号：{{item.extendMsg?item.extendMsg:item.orderNo}}</text>
-              <text>下单时间：{{item.strCreateTime}}</text>
+              <text>下单时间：{{item.time}}</text>
               <text>订单总价：￥{{price.price(item.money)}}</text>
               <text>实付金额：￥{{price.price(item.money)}}</text>
             </view>
