@@ -12,7 +12,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.3.0",
-	"appid": "wxbf0a2b5ef0ee94c6",
+	"appid": "wxda92424d9380bab2",
 	"projectname": "%E5%94%AE%E8%B4%A7%E6%9C%BA2.0",
 	"isGameTourist": false,
 	"simulatorType": "wechat",
@@ -35,13 +35,19 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 1,
 			"list": [
 				{
 					"id": 0,
 					"name": "sdf",
 					"pathName": "pages/goods/index",
 					"query": "deviceId=502887849"
+				},
+				{
+					"id": -1,
+					"name": "pages/goods/index",
+					"pathName": "pages/goods/index",
+					"scene": null
 				}
 			]
 		}
