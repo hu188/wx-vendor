@@ -69,28 +69,31 @@
 
 .pagetop {
   width: 100%;
-  height: 200px;
+  height: 320rpx;
   overflow: hidden;
+  margin-bottom:5px;
 }
 
 .userinfo {
   width: 100%;
   height: 100%;
-  background: url(http://mshop.yiyao365.cn/theme/default/images/wap/background.png) no-repeat;
+  background: #fff;
   background-size: cover;
   display: -webkit-flex;
   display: flex;
+flex-direction: column;
   text-align: center;
   align-items: center;
   justify-content: flex-start;
 }
 
 .userinfo .userinfo-avatar {
-  width: 120px;
-  height: 120px;
+  width: 200rpx;
+  height: 200rpx;
   display: block;
   border-radius: 50%;
-  margin: 0 20rpx;
+  margin: 20rpx 20rpx;
+  /* border: 1px solid #777; */
 }
 .userinfo .vip {
   width: 30px;
@@ -102,7 +105,7 @@
 .userinfo .userinfo-nickname {
   height: 30px;
   line-height: 30px;
-  font-size: 14px;
+  font-size: 32rpx;
 }
 
 .userinfo .logininfo {

@@ -1,0 +1,46 @@
+<!-- <wxs module="img" src="../../utils/image.wxs" /> -->
+<block wx:if="{{!userInfoOpen}}">
+  <view class='auth-img'>
+    <image src="../images/user.jpg" > </image>
+  </view>
+
+  <view class='opt-area'>
+    <view class='auth-title'>
+      为了提供更好的服务，需要获取您的微信个人信息：
+    </view>
+    <view class='auth-tips'>
+      ● 获取您的公开信息（昵称、头像、性别）
+    </view>
+    <view style='display:flex'>
+      <button class="opt-but-cancel" bindtap='cancel'>我再想想</button>
+      <button class='opt-but' open-type="getUserInfo"
+        bindgetuserinfo="agreeGetUser" 
+        >
+        <image src="../images/wx1.png"></image> 微信授权
+      </button>
+    </view>
+  </view>
+</block>
+
+<block wx:else>
+  <view class='info' >
+    <view class="info-item">
+      <view class='item-name'>头像</view>
+      <view class='item-text'>
+        <image src='{{userInfo.avatarUrl}}'></image>
+      </view>
+    </view>
+
+    <view class="info-item">
+      <view class='item-name'>昵称</view>
+      <view class='item-text'>{{userInfo.nickName}}</view>
+    </view>
+
+    <view class="info-item">
+      <view class='item-name'>性别</view>
+      <view class='item-text'>{{userInfo.gender}}</view>
+    </view>
+  </view>
+
+  <button class='exit' bindtap='exitOpt'>返回</button>
+</block>

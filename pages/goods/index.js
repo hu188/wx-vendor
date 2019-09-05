@@ -1,5 +1,6 @@
 //获取应用实例
 const app = getApp();
+const lg = app.loadUtil();
 import common from '../../utils/common';
 import { http } from '../../utils/http';
 import { encode } from '../../utils/encode';
@@ -9,10 +10,6 @@ const {
 Page({
   ...common,
   data: {
-    hidden:false,
-    userInfo: null,
-    hasUserInfo: true,
-    userNick: '',
     types: [],
     deviceId:"",
     classify:'',
@@ -39,7 +36,7 @@ Page({
     wx.hideTabBar()
     //type为1正式版，type为2本地测试 tp为1多货道，tp为0单货道
     //BmcKLAeVhAeVhAc BmcKLBoLBoLBpBq
-    var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=BmcKLAeVhAeVhAc&type=2&appid=6&tp=1'
+    var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=BmcKLAeVhAeVhAc&type=2&appid=6&tp=0'
     //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=AbVeVfVHeVhAfVGAbcViAbfAaVa&type=1&appid=4&tp=1'
    //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=&type=1&appid=38&tp=' 
 
@@ -47,41 +44,7 @@ Page({
       url = decodeURIComponent(options.q);
     }
     this.decodeUrl(url)
-    //判断是否授权
-    var _this = this;
-    wx.getSetting({
-      success(res) {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: resSetting => {
-              app.globalData.userInfo = resSetting.userInfo;
-              _this.setData({
-                userInfo: resSetting.userInfo,
-                hasUserInfo: true,
-                userNick: resSetting.userInfo.nickName
-              });
-              _this.login()
-            }
-          });
-        } else {
-          _this.setData({
-            hidden: true,
-            hasUserInfo: true
-          });
-        }
-      }
-    });
-    // const data = {
-    //   "keyPoolId": app.globalData.id, //小程序id
-    // }
-    // http('qsq/miniService/miniProComm/weChatCommon/saveSecretKey', JSON.stringify(data), 1, 1).then(res=>{
-    //   if (res.sessionId){
-    //     app.globalData.sessionId = res.sessionId;
-    //     this.queryDevice(this.data.sign)
-    //   }
-    
-    // })
- 
+    lg.authLoad(this)
   },
   
   login() {
@@ -389,18 +352,33 @@ Page({
   },
   //去结算
   submitHandler() {
-    const { count } = this.data
-    if (count>0) {
-      getApp().globalData.goodsList = this.data.selectGoods
-      wx.navigateTo({
-        url: '../submitOrder/index'
-      });
-    } else {
-      $Toast({
-        content: '请选择商品！',
-        type: 'error'
-      });
+    if (getApp().globalData.hasUserInfo){
+      const { count } = this.data
+      if (count > 0) {
+        getApp().globalData.goodsList = this.data.selectGoods
+        wx.navigateTo({
+          url: '../submitOrder/index'
+        });
+      } else {
+        $Toast({
+          content: '请选择商品！',
+          type: 'error'
+        });
+      }
+    }else{
+      wx.showModal({
+        title: '温馨提示',
+        content: '购买商品需要先登录，您确定去登陆吗？',
+        success(res) {
+          if (res.confirm) {
+            wx.switchTab({
+              url: '/pages/mycenter/index'
+            })
+          }
+        }
+      })
     }
+ 
   },
   noChangeNumber(){
       $Toast({

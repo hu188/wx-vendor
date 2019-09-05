@@ -105,6 +105,15 @@ App({
     url:'',
     tp: '',//0单货单，1多货道
     nickname:'',
-    sessionId:''
+    sessionId:'',
+    oneLoad: true,
+    hasUserInfo: false,//是否授权
   },
+
+  /**
+  * 加载登录工具包
+  */
+  loadUtil: function () {
+    return require('utils/login.js');
+  }
 });

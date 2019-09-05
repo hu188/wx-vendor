@@ -9,28 +9,30 @@
   </view>
   <scroll-view scroll-y>
     <view class="list">
-      <view class="item" wx:for="{{orderlist}}" wx:key='order'>
-        <view class="od_div">
-          <!-- <view wx:if="{{item.extendMsg}}"> -->
-          <navigator url="../orderDetail/index?orderNo={{item.extendMsg?item.extendMsg:item.orderNo}}&totalMoney={{item.money}}">
-            <view class="od_top">
-              <text>订单编号：{{item.extendMsg?item.extendMsg:item.orderNo}}</text>
-              <text>下单时间：{{item.time}}</text>
-              <text>订单总价：￥{{price.price(item.money)}}</text>
-              <text>实付金额：￥{{price.price(item.money)}}</text>
-            </view>
-          </navigator>
-          <view class="od_bottom">
-            <view class="od_bottom1">
-              <view class="od_status">
+      <view wx:if="{{orderlist.length>0}}">
+        <view class="item" wx:for="{{orderlist}}" wx:key='order'>
+          <view class="od_div">
+            <!-- <view wx:if="{{item.extendMsg}}"> -->
+            <navigator url="../orderDetail/index?orderNo={{item.extendMsg?item.extendMsg:item.orderNo}}&totalMoney={{item.money}}">
+              <view class="od_top">
+                <text>订单编号：{{item.extendMsg?item.extendMsg:item.orderNo}}</text>
+                <text>下单时间：{{item.time}}</text>
+                <text>订单总价：￥{{price.price(item.money)}}</text>
+                <text>实付金额：￥{{price.price(item.money)}}</text>
+              </view>
+            </navigator>
+            <view class="od_bottom">
+              <view class="od_bottom1">
+                <view class="od_status">
 
-                <view class="orderright bluefont">
-                  <view wx:if="{{item.operateType === 3 }}" class="blueBtn" catchtap='view' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-index='{{index}}' data-money='{{item.money}}'>去支付</view>
-                  <view wx:elif="{{item.operateType === 2}}" class="blueBtn" catchtap='view' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}'>查看</view>
-                  <view wx:else>
-                    <view class="blueBtn" catchtap='refund' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-money='{{item.money}}'>退款</view>
-                    <view wx:if="{{item.operateType === 6}}" class="blueBtn" catchtap='send' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-money='{{item.money}}'>重新出货</view>
-                    <view wx:else class="blueBtn" catchtap='view' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-money='{{item.money}}'>查看</view>
+                  <view class="orderright bluefont">
+                    <view wx:if="{{item.operateType === 3 }}" class="blueBtn" catchtap='view' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-index='{{index}}' data-money='{{item.money}}'>去支付</view>
+                    <view wx:elif="{{item.operateType === 2}}" class="blueBtn" catchtap='view' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}'>查看</view>
+                    <view wx:else>
+                      <view class="blueBtn" catchtap='refund' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-money='{{item.money}}'>退款</view>
+                      <view wx:if="{{item.operateType === 6}}" class="blueBtn" catchtap='send' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-money='{{item.money}}'>重新出货</view>
+                      <view wx:else class="blueBtn" catchtap='view' data-orderNo='{{item.extendMsg?item.extendMsg:item.orderNo}}' data-money='{{item.money}}'>查看</view>
+                    </view>
                   </view>
                 </view>
               </view>
@@ -38,6 +40,23 @@
           </view>
         </view>
       </view>
+      <view wx:elif="{{!hasUserInfo}}">
+        <view class="goods-empty">
+          <view class="goods-empty-img black">
+            <image src="../images/empty1.png" style="width:100rpx;height:100rpx;"></image>
+          </view>
+          <view>请先登录哦</view>
+        </view>
+      </view>
+      <view wx:else>
+        <view class="goods-empty">
+          <view class="goods-empty-img black">
+            <image src="../images/empty1.png" style="width:100rpx;height:100rpx;"></image>
+          </view>
+          <view>没有已购商品哦</view>
+        </view>
+      </view>
+
     </view>
   </scroll-view>
 </view>

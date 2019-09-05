@@ -25,63 +25,46 @@ Page({
     currentPageNum: 1,
     selectIndex: 4,
     balance: 0,
+    hasUserInfo:''
   },
   onLoad: function(e) {
     wx.hideTabBar()
     this.queryOrder(4);
     this.setData({
-      balance: app.globalData.balance
+      balance: app.globalData.balance,
+      hasUserInfo:app.globalData.hasUserInfo
     })
   },
 
   //根据订单状态获取我的订单
   queryOrder: function(status) {
-    let that = this;
-    const params = {
-      sign: encode({
-        cusId: app.globalData.userId,
-        status: status
-      }, app.globalData.sessionId),
-      sessionId: app.globalData.sessionId,
-      params: {
-        cusId: app.globalData.userId,
-        status: status
-      }
-    }
-    const deviceId = getApp().globalData.deviceId
-    // const userId = getApp().globalData.userId  'qsq/service/external/order/query'
-    http('qsq/miniService/miniProComm/weChatCommon/getSpedingRecord', params, 1, 1).then(res => {
-      if (res) {
-        // var pcOrder = {};
-        // var newRes = [];
-        // res.find((item, index, arr) => {
-        //   if (item.orderNo && !item.extendMsg) {
-        //     newRes.push(item);
-        //   } else if (item.extendMsg && item.extendMsg.substr(0, 2) == 'PC' && !pcOrder[item.extendMsg]) {
-        //     pcOrder[item.extendMsg] = item.extendMsg + '-' + item.money ;
-        //     newRes.push(item);
-        //   } else if (item.extendMsg && item.extendMsg.substr(0, 2) == 'PC' && pcOrder[item.extendMsg]) {
-        //     const temp = parseFloat(pcOrder[item.extendMsg].split('-')[1]) + item.money;
-        //     pcOrder[item.extendMsg] = item.extendMsg + '-' + temp;
-        //   }
-        //   if (item.extendMsg && newRes[newRes.length - 1].extendMsg == item.extendMsg) {
-        //     newRes[newRes.length - 1].money = pcOrder[item.extendMsg].split('-')[1];
-        //   }
-        // });
-        // this.setData({
-        //   orderlist: newRes
-        // })
-        // pcOrder = null;
-        // newRes = null;
-        let orderList = res.orderList;
-        for (var i = 0; i < orderList.length; i++) {
-          orderList[i].time = that.formatDateTime(orderList[i].createTime)
+    if (app.globalData.hasUserInfo){
+      let that = this;
+      const params = {
+        sign: encode({
+          cusId: getApp().globalData.userId,
+          status: status
+        }, app.globalData.sessionId),
+        sessionId: app.globalData.sessionId,
+        params: {
+          cusId: getApp().globalData.userId,
+          status: status
         }
-        that.setData({
-          orderlist: orderList
-        })
       }
-    })
+      const deviceId = getApp().globalData.deviceId
+      http('qsq/miniService/miniProComm/weChatCommon/getSpedingRecord', params, 1, 1).then(res => {
+        if (res) {
+          let orderList = res.orderList;
+          for (var i = 0; i < orderList.length; i++) {
+            orderList[i].time = that.formatDateTime(orderList[i].createTime)
+          }
+          that.setData({
+            orderlist: orderList
+          })
+        }
+      })
+    }
+    
   },
   //格式化时间
   formatDateTime: function (inputTime) {

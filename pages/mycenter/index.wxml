@@ -2,16 +2,10 @@
 <view class="container container1">
   <view class="pagetop">
     <view class="userinfo">
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <image class="userinfo-avatar" src="{{avatarUrl}}" bindtap='toUserInfo'></image>
+      <text class="userinfo-nickname" bindtap='toUserInfo'>{{nickName}}</text>
       <image wx:if="{{isVip==1}}" class="vip" src="../images/vip.jpg"></image>
-      <view a:if="{{isshowlogin==1}}">
-        <navigator class="logininfo" url='{{loginurl}}'>{{showtext}}</navigator>
-      </view>
-      <view a:else>
-        <text class="color">{{showtext}}</text>
-        <text class="exit" a:if="{{showtext}}" onTap='userexit'>{{logouttxt}}</text>
-      </view>
+      
     </view>
     
   </view>
@@ -66,11 +60,11 @@
         </view>
       </navigator>
 
-<navigator url="../rechargeVip/index">
+<!-- <navigator url="../rechargeVip/index">
         <view class="div_div1 orderList">
           <view class="tab_div">
             <view class="ico1">
-              <!-- <image src="../images/vip.jpg" class="vip"></image> -->
+        
               <i-icon type="addressbook" size="24" color="#EE2C2C" style='margin-right:10px;'/>
               <view class="tab_span">我的会员</view>
             </view>
@@ -80,7 +74,7 @@
           </view>
           <view class="divclear5"></view>
         </view>
-      </navigator>
+      </navigator> -->
 
       <button  open-type='concat' class='concat'>
         <view class="div_div1 orderList">

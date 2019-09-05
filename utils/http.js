@@ -37,11 +37,12 @@ module.exports =  {
                     } else if (code * 1 === 0) {
                       resolve(data)
                     } 
-                     else if (status * 1 === 78) { 
+                     else if (code * 1 === 78) { 
                       wx.showToast({
                         title: '请求发生错误！',
                         icon: 'loading'
                       })
+                      resolve(res.data)
                     } else {
                     }
                 },

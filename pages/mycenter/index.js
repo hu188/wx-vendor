@@ -3,26 +3,32 @@ import util from '../../utils/util';
 import { http } from '../../utils/http';
 Page({
   data: {
-    userInfo: {},
-    isVip:''
+    isVip:'',
+    nickName: '点击登录',
+    isLoad: false,
+    avatarUrl: '../images/user.jpg'
   },
   onLoad: function () {
-    
-    this.setData({
+   
+  },
+  toUserInfo: function () {
+    wx.navigateTo({
+      url: '../userinfo/userinfo'
+    })
+  },
+  onShow: function () {
+    let that = this;
+    that.setData({
       isVip: app.globalData.isVip
     })
     wx.hideTabBar()
     wx.getUserInfo({
-      success: res =>{
-        const { userInfo} = res
-        this.setData({
-          userInfo
+      success: function (res) {
+        that.setData({
+          nickName: res.userInfo.nickName,
+          avatarUrl: res.userInfo.avatarUrl
         })
       }
     })
-  },
-
-  onShow: function () {
-    
   }
 });
