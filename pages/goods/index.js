@@ -36,9 +36,9 @@ Page({
     wx.hideTabBar()
     //type为1正式版，type为2本地测试 tp为1多货道，tp为0单货道
     //BmcKLAeVhAeVhAc BmcKLBoLBoLBpBq
-    var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=BmcKLAeVhAeVhAc&type=2&appid=6&tp=0'
+    //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=BmcKLAeVhAeVhAc&type=2&appid=6&tp=0'
     //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=AbVeVfVHeVhAfVGAbcViAbfAaVa&type=1&appid=4&tp=1'
-   //var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=&type=1&appid=38&tp=' 
+   var url = 'https://www.tianrenyun.com/qsq/paomian/?sign=&type=1&appid=38&tp=' 
 
     if (options.q) {
       url = decodeURIComponent(options.q);
